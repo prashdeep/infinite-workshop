@@ -1,0 +1,148 @@
+openapi: 3.0.0
+info:
+  title: Employee Management API
+  description: API for managing Employees
+  termsOfService: http://www.classpath.com/terms-of-service
+  contact:
+    name: Pradeep
+    url: http://www.domain.com/contact
+    email: contact@domain.com
+  version: 1.0.0
+servers:
+- url: https://virtserver.swaggerhub.com/prashdeep/Employee_API_DEV/1.0.0
+  description: SwaggerHub API Auto Mocking
+- url: https://api.classpath.com
+  variables:
+    protocol:
+      default: https
+      enum:
+      - http
+      - https
+paths:
+  /employees:
+    get:
+      description: API to fetch all the employees
+      parameters:
+      - name: noOfRecords
+        in: query
+        description: numer of records to be fetched
+        required: false
+        style: form
+        explode: true
+        schema:
+          maximum: 20
+          minimum: 10
+          type: integer
+          example: 15
+      - name: pageLimit
+        in: query
+        description: number of records to be displayed per page
+        required: false
+        style: form
+        explode: true
+        schema:
+          maximum: 10
+          minimum: 5
+          type: integer
+          example: 4
+      responses:
+        200:
+          description: Successfull Response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Employee'
+    post:
+      description: API to save employee in the database
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/body'
+        required: true
+      responses:
+        200:
+          description: Employee created successfully
+        401:
+          description: Unauthorized API access
+        403:
+          description: Forbidden from invoking this API
+        500:
+          description: Something went wrong while invoking the API
+  /employees/{id}:
+    get:
+      description: API to fetch the Employee with a given id.
+      parameters:
+      - name: id
+        in: path
+        description: employee id to be fetched
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          example: 4
+      responses:
+        200:
+          description: Successfull response from the server
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Employee'
+  /upload:
+    post:
+      description: uploading a file
+      requestBody:
+        content:
+          image/png:
+            schema:
+              type: string
+              format: binary
+      responses:
+        200:
+          description: Successfull uploaded the image
+  /upload-multiple-files:
+    post:
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/body_1'
+      responses:
+        200:
+          description: Uploading multiple files
+components:
+  schemas:
+    Employee:
+      properties:
+        id:
+          type: integer
+          example: 4
+        employee name:
+          type: string
+          example: ramesh
+        employee email:
+          type: string
+          example: ramesh@domain.com
+      description: Employee Model object
+    body:
+      type: object
+      properties:
+        employee name:
+          type: string
+          example: Suresh
+        employe email:
+          type: string
+          example: suresh@comapny.com
+    body_1:
+      type: object
+      properties:
+        orderId:
+          type: integer
+        userId:
+          type: integer
+        fileName:
+          type: string
+          format: binary

@@ -1,0 +1,14 @@
+SOLID Design principles 
+    Single responsibility 
+        method 
+        class 
+        module 
+    Open closed principle
+        IS-A 
+        Using classes 
+        Using Interfaces 
+    Liskov substitution principle
+        Using class 
+        Using Interface 
+    Dependency Inversion principle 
+
